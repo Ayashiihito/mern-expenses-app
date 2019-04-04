@@ -1,5 +1,4 @@
-const express = require('express');
-const router = express.Router();
+const router = require('express').Router();
 const gravatar = require('gravatar');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
@@ -19,22 +18,22 @@ router.get('/', (req, res) => {
 //@desc put a user in DB
 //@acess PUBLIC
 router.post('/register', (req, res) => {
-  const body = req.body;
+  const { name, email, password } = req.body;
 
-  User.findOne({ email: body.email }).then(user => {
+  User.findOne({ email }).then(user => {
     if (user) {
       return res.status(400).json({ email: 'Email already exists' });
     } else {
-      const avatar = gravatar.url(body.email, {
+      const avatar = gravatar.url(email, {
         s: '200', // Size
         r: 'PG', // Rating
         d: 'mm', // Default
       });
 
       const newUser = new User({
-        name: body.name,
-        email: body.email,
-        password: body.password,
+        name,
+        email,
+        password,
         avatar,
       });
 
@@ -56,8 +55,8 @@ router.post('/register', (req, res) => {
 //@desc Login user / Return JWT token
 //@acess PUBLIC
 router.post('/login', (req, res) => {
-  const email = req.body.email;
-  const password = req.body.password;
+  const { email, password } = req.body;
+
   User.findOne({ email }).then(user => {
     if (!user) return res.status(404).json({ email: 'User not found' });
     bcrypt.compare(password, user.password).then(isMatch => {
