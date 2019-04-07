@@ -2,6 +2,7 @@ const app = require('express')();
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const passport = require('passport');
+const cors = require('cors')
 
 const expenses = require('./routes/api/expenses');
 const users = require('./routes/api/users');
@@ -18,6 +19,7 @@ mongoose
 //Middleware
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(cors());
 app.use(passport.initialize());
 
 //Passport Config:
