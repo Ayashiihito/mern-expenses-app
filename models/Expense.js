@@ -4,20 +4,20 @@ const Schema = mongoose.Schema;
 const ExpenseSchema = new Schema({
   user: {
     type: Schema.Types.ObjectId,
-    ref: 'user'
+    ref: 'user',
   },
   value: {
     type: Number,
     required: true,
   },
   expType: {
-    type: String,
-    required: true,
+    type: Schema.Types.ObjectId,
+    ref: 'expType',
   },
   date: {
     type: Date,
-    required: true
+    required: true,
   },
 });
 
-module.exports = Expense = mongoose.model('expense', ExpenseSchema);
+module.exports = Expense = mongoose.model('expType', ExpenseSchema);
