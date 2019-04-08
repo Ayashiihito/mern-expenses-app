@@ -9,13 +9,6 @@ const secret = require('../../config/keys').secret;
 const validateRegisterInput = require('../../validation/register');
 const validateLoginInput = require('../../validation/login');
 
-//@route GET /api/users
-//@desc get a list of all users
-//@acess PUBLIC
-router.get('/', (req, res) => {
-  User.find().then(users => res.json(users));
-});
-
 //@route POST /api/users/register
 //@desc put a user in DB
 //@acess PUBLIC
