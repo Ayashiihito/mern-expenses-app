@@ -3,6 +3,7 @@ const router = express.Router();
 const passport = require('passport');
 
 const Expense = require('../../models/Expense');
+const ExpType = require('../../models/ExpType');
 
 const validateExpenseInput = require('../../validation/expense.js');
 
@@ -14,7 +15,10 @@ router.get(
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
     Expense.find({ user: req.user.id })
-      .then(expenses => res.json(expenses))
+      .then(expenses => {
+        console.log(expenses);
+        res.json(expenses);
+      })
       .catch(err => res.status(404));
   }
 );
@@ -27,18 +31,28 @@ router.post(
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
     const { errors, isValid } = validateExpenseInput(req.body);
-
+    const { amount, expTypeId, date } = req.body;
     if (!isValid) {
       return res.status(400).json(errors);
     }
-
     const expense = new Expense({
       user: req.user.id,
-      value: req.body.value,
-      expType: req.body.expType,
-      date: req.body.date,
+      amount,
+      expTypeId,
+      date,
     });
-    expense.save().then(expense => res.json(expense));
+
+    ExpType.findById(expTypeId)
+      .then(type =>
+        expense.save().then(expense => {
+          res.json(expense);
+        })
+      )
+      .catch(err => {
+        errors.expense = "ExpType wasn't found";
+        console.log(err);
+        return res.status(400).json(errors);
+      });
   }
 );
 

@@ -29,7 +29,7 @@ require('./config/passport')(passport);
 //Routes:
 app.use('/api/expenses', expenses);
 app.use('/api/users', users);
-app.use('/api/exptypes', expTypes);
+app.use('/api/expTypes', expTypes);
 
 app.listen(process.env.PORT || PORT, () =>
   console.log(`Started server at ${PORT}`)

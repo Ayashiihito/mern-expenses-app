@@ -16,4 +16,14 @@ const ExpTypeSchema = new Schema({
   },
 });
 
-module.exports = ExpType = mongoose.model('expense', ExpTypeSchema);
+// Duplicate the ID field.
+ExpTypeSchema.virtual('id').get(function() {
+  return this._id.toHexString();
+});
+
+// Ensure virtual fields are serialised.
+ExpTypeSchema.set('toJSON', {
+  virtuals: true,
+});
+
+module.exports = ExpType = mongoose.model('expType', ExpTypeSchema);

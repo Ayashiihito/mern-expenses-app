@@ -6,11 +6,11 @@ const ExpenseSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'user',
   },
-  value: {
+  amount: {
     type: Number,
     required: true,
   },
-  expType: {
+  expTypeId: {
     type: Schema.Types.ObjectId,
     ref: 'expType',
   },
@@ -20,4 +20,14 @@ const ExpenseSchema = new Schema({
   },
 });
 
-module.exports = Expense = mongoose.model('expType', ExpenseSchema);
+// Duplicate the ID field.
+ExpenseSchema.virtual('id').get(function() {
+  return this._id.toHexString();
+});
+
+// Ensure virtual fields are serialised.
+ExpenseSchema.set('toJSON', {
+  virtuals: true,
+});
+
+module.exports = Expense = mongoose.model('expense', ExpenseSchema);

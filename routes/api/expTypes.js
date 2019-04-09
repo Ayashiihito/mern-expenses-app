@@ -4,7 +4,7 @@ const passport = require('passport');
 
 const ExpType = require('../../models/ExpType');
 
-const validateExpTypeInput = require('../../validation/expense.js');
+const validateExpTypeInput = require('../../validation/expType.js');
 
 //@route GET api/expTypes
 //@desc get a list of all expense types
@@ -14,7 +14,7 @@ router.get(
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
     ExpType.find({ user: req.user.id })
-      .then(tpyes => res.json(tpyes))
+      .then(types => res.json(types))
       .catch(err => res.status(404));
   }
 );
@@ -32,11 +32,12 @@ router.post(
       return res.status(400).json(errors);
     }
 
-    const expType = new expType({
+    const expType = new ExpType({
       user: req.user.id,
       name: req.body.name,
       color: req.body.color,
     });
+
     expType.save().then(expType => res.json(expType));
   }
 );
