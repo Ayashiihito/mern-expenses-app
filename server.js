@@ -1,8 +1,10 @@
-const app = require('express')();
+const express = require('express');
+const app = express();
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const passport = require('passport');
 const cors = require('cors');
+const path = require('path');
 
 const expenses = require('./routes/api/expenses');
 const expTypes = require('./routes/api/expTypes');
@@ -30,6 +32,14 @@ require('./config/passport')(passport);
 app.use('/api/expenses', expenses);
 app.use('/api/users', users);
 app.use('/api/expTypes', expTypes);
+
+//Static
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static('client/build'));
+  app.get('*', (req, res) =>
+    res.sendFile(path.resolve(__dirname), 'client', 'build', 'index.html')
+  );
+}
 
 app.listen(process.env.PORT || PORT, () =>
   console.log(`Started server at ${PORT}`)
