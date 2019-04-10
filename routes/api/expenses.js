@@ -16,7 +16,6 @@ router.get(
   (req, res) => {
     Expense.find({ user: req.user.id })
       .then(expenses => {
-        console.log(expenses);
         res.json(expenses);
       })
       .catch(err => res.status(404));
@@ -68,7 +67,7 @@ router.delete(
         if (expense.user.toString() !== req.user.id) {
           return res.status(401).json({ notauthorized: 'User not authorized' });
         }
-        expense.remove().then(() => res.json({ success: true }));
+        expense.remove().then(() => res.json({ id: req.params.id }));
       })
       .catch(err =>
         res.status(404).json({ expensenotfound: 'No expense found' })
