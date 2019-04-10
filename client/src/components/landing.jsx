@@ -29,7 +29,9 @@ const Container = styled.div`
 `;
 
 const Landing = ({ fetchAll }) => {
-  useEffect(() => fetchAll());
+  useEffect(() => {
+    fetchAll();
+  });
   return (
     <Main>
       <Total />

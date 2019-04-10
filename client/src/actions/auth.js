@@ -2,14 +2,16 @@ import axios from 'axios';
 import decode from 'jwt-decode';
 import setAuthToken from '../util/setAuthToken';
 
-export const registerUser = (user, history) => dispatch => {
-  axios.post('/api/users/register', user).catch(err =>
+export const registerUser = (user, history) => async dispatch => {
+  try {
+    const { data } = await axios.post('/api/users/register', user);
+    if (data) history.push('/login');
+  } catch (err) {
     dispatch({
       type: 'GET_ERRORS',
       errors: err.response.data,
-    })
-  );
-  history.push('/login');
+    });
+  }
 };
 
 export const loginUser = user => async dispatch => {

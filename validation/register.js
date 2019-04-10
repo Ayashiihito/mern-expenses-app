@@ -29,10 +29,10 @@ module.exports = function validateRegisterInput(data) {
     errors.password = 'Password must be between 5 and 30 characters';
   }
   if (Validator.isEmpty(password2)) {
-    errors.password = 'Confirm password is required';
+    errors.password2 = 'Confirm password is required';
   }
   if (!Validator.equals(password, password2)) {
-    errors.password = 'Passwords must match';
+    errors.password2 = 'Passwords must match';
   }
 
   return {

@@ -24,10 +24,10 @@ export const fetchAll = () => async dispatch => {
 // export const fetchExpenses = () => async dispatch => {
 //   try {
 //     const { data } = await axios.get('/api/expenses');
-    // const expenses = data.map(expense => {
-    //   expense.date = new Date(expense.date);
-    //   return expense;
-    // });
+// const expenses = data.map(expense => {
+//   expense.date = new Date(expense.date);
+//   return expense;
+// });
 //     dispatch({
 //       type: 'FETCH_EXPENSES',
 //       expenses,

@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components/macro';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
+import Exit from '@material-ui/icons/ExitToAppRounded';
 
 import { logoutUser } from '../actions/auth';
 
@@ -11,6 +12,8 @@ const StyledLink = styled(Link)`
   color: ${props => props.theme.primaryTextColor};
   text-decoration: none;
   padding: 0 0.5rem;
+  border: none;
+  background: none;
 `;
 
 const mapStateToProps = state => ({
@@ -38,8 +41,23 @@ const Navbar = ({ isAuthenticated, logoutUser }) => (
           Expenses
         </StyledLink>
         {isAuthenticated ? (
-          <StyledLink as="button" href="#" onClick={() => logoutUser()}>
-            Logout
+          <StyledLink
+            css={`
+              display: flex;
+              align-items: center;
+              justify-content: center;
+            `}
+            as="button"
+            href="#"
+            onClick={() => logoutUser()}
+          >
+            LogOut
+            <Exit
+              css={`
+                padding-left: 10px;
+                font-size: 30px !important;
+              `}
+            />
           </StyledLink>
         ) : (
           <>

@@ -4,9 +4,12 @@ import Close from '@material-ui/icons/CloseRounded';
 import myButton from '../common/button';
 
 const Button = styled(myButton)`
-  background: transparent !important;
-  padding: 0 !important;
-  height: 100%;
+  && {
+    background: transparent;
+    padding: 0;
+    height: 100%;
+    color: ${props => props.theme.primaryColor};
+  }
 `;
 const Color = styled.div`
   margin: 1rem;
