@@ -1,5 +1,5 @@
 import rootReducer from './reducers/reducer';
-import { applyMiddleware, createStore, compose } from 'redux';
+import { applyMiddleware, createStore } from 'redux';
 import thunk from 'redux-thunk';
 
 const configureStore = () => {
@@ -11,14 +11,7 @@ const configureStore = () => {
     middlewares.push(logger);
   }
 
-  const store = createStore(
-    rootReducer,
-    compose(
-      applyMiddleware(...middlewares),
-      window.__REDUX_DEVTOOLS_EXTENSION__ &&
-        window.__REDUX_DEVTOOLS_EXTENSION__()
-    )
-  );
+  const store = createStore(rootReducer, applyMiddleware(...middlewares));
   return store;
 };
 
