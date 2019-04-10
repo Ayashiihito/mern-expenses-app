@@ -85,7 +85,7 @@ router.post('/login', (req, res) => {
         return res.status(400).json(errors);
       }
     });
-  });
+  }).catch(err => res.status(404).json(err))
 });
 
 //@route GET /api/users/curent
