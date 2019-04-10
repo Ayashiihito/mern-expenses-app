@@ -4,6 +4,7 @@
   * React
   * Redux
   * Material-Ui
+  * Styled-components
 
 #### Back-end:
   * Node
