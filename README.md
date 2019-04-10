@@ -24,5 +24,5 @@ Back-end routes:
   * POST `/api/exptypes`
   * DELETE `/api/expenses/:id`
   
-  Back-end part is mostly done by following this [Udemy course](https://www.udemy.com/mern-stack-front-to-back/),  
+  The back-end part is mostly done by following this [Udemy course](https://www.udemy.com/mern-stack-front-to-back/),  
   but with some deviations here and there.
