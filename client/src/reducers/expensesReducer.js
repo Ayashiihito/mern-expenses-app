@@ -13,16 +13,28 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case 'FETCH_EXPENSES':
+    case 'FETCH_ALL':
       return {
         ...state,
-        expenses: [...state.expenses, ...action.expenses],
-      };
-    case 'FETCH_EXPTYPES':
-      return {
-        ...state,
+        expenses: [
+          ...state.expenses,
+          ...action.expenses.map(expense => {
+            expense.date = new Date(expense.date);
+            return expense;
+          }),
+        ],
         expTypes: [...state.expTypes, ...action.expTypes],
       };
+    // case 'FETCH_EXPENSES':
+    //   return {
+    //     ...state,
+    //     expenses: [...state.expenses, ...action.expenses],
+    //   };
+    // case 'FETCH_EXPTYPES':
+    //   return {
+    //     ...state,
+    //     expTypes: [...state.expTypes, ...action.expTypes],
+    //   };
     case 'ADD_EXPENSE':
       const { id, date, expTypeId, amount } = action;
       return {

@@ -1,31 +1,41 @@
 import axios from 'axios';
 
-export const fetchExpTypes = () => async dispatch => {
-  try {
-    const { data: expTypes } = await axios.get('/api/expTypes');
-    dispatch({
-      type: 'FETCH_EXPTYPES',
-      expTypes,
-    });
-  } catch (err) {
-    console.log(err);
-  }
+export const fetchAll = () => async dispatch => {
+  const { data: expTypes } = await axios.get('/api/expTypes');
+  const { data: expenses } = await axios.get('/api/expenses');
+  dispatch({
+    type: 'FETCH_ALL',
+    expTypes,
+    expenses,
+  });
 };
-export const fetchExpenses = () => async dispatch => {
-  try {
-    const { data } = await axios.get('/api/expenses');
-    const expenses = data.map(expense => {
-      expense.date = new Date(expense.date);
-      return expense;
-    });
-    dispatch({
-      type: 'FETCH_EXPENSES',
-      expenses,
-    });
-  } catch (err) {
-    console.log(err);
-  }
-};
+
+// export const fetchExpTypes = () => async dispatch => {
+//   try {
+//     const { data: expTypes } = await axios.get('/api/expTypes');
+//     dispatch({
+//       type: 'FETCH_EXPTYPES',
+//       expTypes,
+//     });
+//   } catch (err) {
+//     console.log(err);
+//   }
+// };
+// export const fetchExpenses = () => async dispatch => {
+//   try {
+//     const { data } = await axios.get('/api/expenses');
+    // const expenses = data.map(expense => {
+    //   expense.date = new Date(expense.date);
+    //   return expense;
+    // });
+//     dispatch({
+//       type: 'FETCH_EXPENSES',
+//       expenses,
+//     });
+//   } catch (err) {
+//     console.log(err);
+//   }
+// };
 
 export const addExpense = (amount, expTypeId) => async dispatch => {
   const expense = {

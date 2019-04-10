@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
+import { connect } from 'react-redux';
 
 import ExpensesInputs from './expensesInputs';
 import ExpensesHistory from './expensesHistory';
 import Total from './total';
+import { fetchAll } from '../actions/actions.js';
 
 const Main = styled.main`
   display: flex;
@@ -26,14 +28,20 @@ const Container = styled.div`
   align-items: center;
 `;
 
-const Landing = () => (
-  <Main>
-    <Total />
-    <Container>
-      <ExpensesInputs />
-      <ExpensesHistory />
-    </Container>
-  </Main>
-);
+const Landing = ({ fetchAll }) => {
+  useEffect(() => fetchAll());
+  return (
+    <Main>
+      <Total />
+      <Container>
+        <ExpensesInputs />
+        <ExpensesHistory />
+      </Container>
+    </Main>
+  );
+};
 
-export default Landing;
+export default connect(
+  null,
+  { fetchAll }
+)(Landing);

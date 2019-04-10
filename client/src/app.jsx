@@ -5,8 +5,7 @@ import setAuthToken from './util/setAuthToken';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { createGlobalStyle, ThemeProvider } from 'styled-components';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import { setCurrentUser } from './actions/auth';
-import { fetchExpenses, fetchExpTypes } from './actions/actions.js';
+import { setCurrentUser, logoutUser } from './actions/auth';
 
 import configureStore from './Store';
 
@@ -31,9 +30,12 @@ if (localStorage.jwtToken) {
   setAuthToken(localStorage.jwtToken);
   const decoded = decode(localStorage.jwtToken);
   store.dispatch(setCurrentUser(decoded));
+  const currentTime = Date.now() / 1000;
+  if (decoded.exp < currentTime) {
+    store.dispatch(logoutUser());
+    window.location.href = '/login';
+  }
 }
-store.dispatch(fetchExpTypes());
-store.dispatch(fetchExpenses());
 
 const App = () => (
   <Provider store={store}>
