@@ -27,13 +27,6 @@ if (process.env.NODE_ENV !== 'production') {
   const cors = require('cors');
   app.use(cors());
 }
-//Static
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static('client/build'));
-  app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
-  });
-}
 //Passport Config:
 require('./config/passport')(passport);
 
@@ -41,6 +34,13 @@ require('./config/passport')(passport);
 app.use('/api/expenses', expenses);
 app.use('/api/users', users);
 app.use('/api/expTypes', expTypes);
+//Static
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static('client/build'));
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+  });
+};
 
 app.listen(process.env.PORT || PORT, () =>
   console.log(`Started server at ${PORT}`)
