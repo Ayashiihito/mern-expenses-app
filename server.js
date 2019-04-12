@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const helmet = require('helmet');
 const passport = require('passport');
+const compression = require('compression');
 const path = require('path');
 
 const expenses = require('./routes/api/expenses');
@@ -24,6 +25,7 @@ app.use(helmet());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(passport.initialize());
+app.use(compression());
 
 if (process.env.NODE_ENV !== 'production') {
   const cors = require('cors');
