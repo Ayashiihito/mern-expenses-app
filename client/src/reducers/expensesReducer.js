@@ -1,4 +1,5 @@
 const initialState = {
+  isFetching: false,
   expenses: [],
   expTypes: [],
   modals: {
@@ -17,24 +18,25 @@ export default (state = initialState, action) => {
       return {
         ...state,
         expenses: [
-          ...state.expenses,
           ...action.expenses.map(expense => {
             expense.date = new Date(expense.date);
             return expense;
           }),
         ],
-        expTypes: [...state.expTypes, ...action.expTypes],
+        expTypes: [...action.expTypes],
       };
-    // case 'FETCH_EXPENSES':
-    //   return {
-    //     ...state,
-    //     expenses: [...state.expenses, ...action.expenses],
-    //   };
-    // case 'FETCH_EXPTYPES':
-    //   return {
-    //     ...state,
-    //     expTypes: [...state.expTypes, ...action.expTypes],
-    //   };
+    case 'FETCH_START':
+    case 'FETCH_END':
+      return {
+        ...state,
+        isFetching: !state.isFetching,
+      };
+    case 'LOG_OUT':
+      return {
+        ...state,
+        expenses: [],
+        expTypes: [],
+      };
     case 'ADD_EXPENSE':
       const { id, date, expTypeId, amount } = action;
       return {

@@ -1,6 +1,9 @@
 import axios from 'axios';
 
 export const fetchAll = () => async dispatch => {
+  dispatch({
+    type: 'FETCH_START',
+  });
   const { data: expTypes } = await axios.get('/api/expTypes');
   const { data: expenses } = await axios.get('/api/expenses');
   dispatch({
@@ -8,34 +11,10 @@ export const fetchAll = () => async dispatch => {
     expTypes,
     expenses,
   });
+  dispatch({
+    type: 'FETCH_END',
+  });
 };
-
-// export const fetchExpTypes = () => async dispatch => {
-//   try {
-//     const { data: expTypes } = await axios.get('/api/expTypes');
-//     dispatch({
-//       type: 'FETCH_EXPTYPES',
-//       expTypes,
-//     });
-//   } catch (err) {
-//     console.log(err);
-//   }
-// };
-// export const fetchExpenses = () => async dispatch => {
-//   try {
-//     const { data } = await axios.get('/api/expenses');
-// const expenses = data.map(expense => {
-//   expense.date = new Date(expense.date);
-//   return expense;
-// });
-//     dispatch({
-//       type: 'FETCH_EXPENSES',
-//       expenses,
-//     });
-//   } catch (err) {
-//     console.log(err);
-//   }
-// };
 
 export const addExpense = (amount, expTypeId) => async dispatch => {
   const expense = {

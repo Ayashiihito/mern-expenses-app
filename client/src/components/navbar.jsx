@@ -11,63 +11,88 @@ import { logoutUser } from '../actions/auth';
 const StyledLink = styled(Link)`
   color: ${props => props.theme.primaryTextColor};
   text-decoration: none;
-  padding: 0 0.5rem;
+  text-shadow: ${props => props.theme.shadow};
+  padding: 1rem 1.5rem;
+  border-radius: 5%;
   border: none;
   background: none;
+  &:hover {
+    background: rgba(0, 0, 0, 0.1);
+  }
+`;
+const Avatar = styled.img`
+  size: 45px;
+  margin: 0 0.5rem;
+  border-radius: 50%;
+  box-shadow: ${props => props.theme.shadow};
 `;
 
 const mapStateToProps = state => ({
   isAuthenticated: state.auth.isAuthenticated,
+  avatarSmall: state.auth.user.avatarSmall,
 });
 
-const Navbar = ({ isAuthenticated, logoutUser }) => (
-  <div
-    css={`
-      flex-grow: 1;
-    `}
-  >
-    <AppBar position="static">
-      <Toolbar
+const Navbar = ({ isAuthenticated, logoutUser, avatarSmall }) => (
+  <AppBar position="static">
+    <Toolbar
+      css={`
+        background: ${props => props.theme.primaryColor};
+        justify-content: space-between;
+      `}
+    >
+      <StyledLink
+        to="/"
         css={`
-          background: ${props => props.theme.primaryColor};
+          &:hover {
+            //override button hover
+            background: ${props => props.theme.primaryColor};
+          }
         `}
       >
-        <StyledLink
-          to="/"
-          css={`
-            flex-grow: 1;
-          `}
-        >
-          Expenses
-        </StyledLink>
+        Expenses
+      </StyledLink>
+      <div>
         {isAuthenticated ? (
-          <StyledLink
+          <div
             css={`
               display: flex;
+              flex-direction: row;
               align-items: center;
-              justify-content: center;
             `}
-            as="button"
-            href="#"
-            onClick={() => logoutUser()}
           >
-            LogOut
-            <Exit
-              css={`
-                padding-left: 10px;
-                font-size: 30px !important;
-              `}
+            <Avatar
+              src={avatarSmall}
+              alt="Visit gravatar.com to set profile image"
             />
-          </StyledLink>
+            <StyledLink
+              css={`
+                //center text and exit icon
+                display: flex;
+                align-items: center;
+                justify-content: center;
+              `}
+              as="button"
+              href="#"
+              onClick={() => logoutUser()}
+            >
+              Log Out
+              <Exit
+                css={`
+                  padding-left: 10px;
+                  font-size: 30px !important;
+                `}
+              />
+            </StyledLink>
+          </div>
         ) : (
           <>
             <StyledLink to="/login">Login</StyledLink>
             <StyledLink to="/register">Register</StyledLink>
           </>
         )}
-      </Toolbar>
-    </AppBar>
-  </div>
+      </div>
+    </Toolbar>
+  </AppBar>
 );
 
 export default connect(

@@ -22,11 +22,16 @@ router.post('/register', (req, res) => {
 
   User.findOne({ email }).then(user => {
     if (user) {
-      errors.email = 'Email already exists';
+      errors.email = 'User with this email already exists';
       return res.status(400).json(errors);
     } else {
       const avatar = gravatar.url(email, {
         s: '200', // Size
+        r: 'PG', // Rating
+        d: 'mm', // Default
+      });
+      const avatarSmall = gravatar.url(email, {
+        s: '50', // Size
         r: 'PG', // Rating
         d: 'mm', // Default
       });
@@ -36,6 +41,7 @@ router.post('/register', (req, res) => {
         email,
         password,
         avatar,
+        avatarSmall,
       });
 
       bcrypt.genSalt(10, (err, salt) => {
@@ -63,29 +69,32 @@ router.post('/login', (req, res) => {
     return res.status(400).json(errors);
   }
 
-  User.findOne({ email }).then(user => {
-    if (!user) {
-      errors.email = 'User not found';
-      return res.status(404).json(errors);
-    }
-
-    bcrypt.compare(password, user.password).then(isMatch => {
-      if (isMatch) {
-        const payload = {
-          id: user.id,
-          name: user.name,
-          avatar: user.avatar,
-        }; // create JWT payload
-
-        jwt.sign(payload, secret, { expiresIn: 3600 }, (err, token) => {
-          res.json({ success: true, token: 'Bearer ' + token });
-        });
-      } else {
-        errors.password = 'Incorect password';
-        return res.status(400).json(errors);
+  User.findOne({ email })
+    .then(user => {
+      if (!user) {
+        errors.email = 'Incorrect email or password';
+        return res.status(404).json(errors);
       }
-    });
-  }).catch(err => res.status(404).json(err))
+
+      bcrypt.compare(password, user.password).then(isMatch => {
+        if (isMatch) {
+          const payload = {
+            id: user.id,
+            name: user.name,
+            avatar: user.avatar,
+            avatarSmall: user.avatarSmall,
+          }; // create JWT payload
+
+          jwt.sign(payload, secret, { expiresIn: 3600 }, (err, token) => {
+            res.json({ success: true, token: 'Bearer ' + token });
+          });
+        } else {
+          errors.email = 'Incorect email or password';
+          return res.status(400).json(errors);
+        }
+      });
+    })
+    .catch(err => res.status(404).json(err));
 });
 
 //@route GET /api/users/curent
@@ -111,7 +120,7 @@ router.get(
 router.delete('/:id', (req, res) => {
   User.findById(req.params.id)
     .then(user => user.remove().then(() => res.json({ success: true })))
-    .catch(err => res.status(404).json({ success: false, err }));
+    .catch(err => res.status(404).json({ success: false }));
 });
 
 module.exports = router;

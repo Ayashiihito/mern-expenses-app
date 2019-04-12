@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import mPaper from '@material-ui/core/Paper';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import { getExpenses } from '../../actions/selectors';
 import { groupByDate } from '../../actions/selectors';
@@ -17,10 +18,17 @@ const Paper = styled(mPaper)`
 const mapStateToProps = state => ({
   expenses: groupByDate(getExpenses(state)),
   expTypes: state.expensesApp.expTypes,
+  isFetching: state.expensesApp.isFetching,
 });
 
-const ExpensesHistory = ({ expenses, expTypes, deleteExpense }) => {
-  return Object.keys(expenses)[0] ? (
+const ExpensesHistory = ({ expenses, expTypes, deleteExpense, isFetching }) => {
+  return isFetching ? (
+    <CircularProgress
+      css={`
+        margin: 3rem;
+      `}
+    />
+  ) : Object.keys(expenses)[0] ? (
     Object.keys(expenses).map(date => (
       <Paper key={date}>
         <span>{date}</span>
