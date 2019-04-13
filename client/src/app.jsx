@@ -5,22 +5,21 @@ import setAuthToken from './util/setAuthToken';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { createGlobalStyle, ThemeProvider } from 'styled-components';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import { setCurrentUser, logoutUser } from './actions/auth';
+import 'typeface-roboto';
 
 import configureStore from './Store';
-
 import theme from './theme';
 import PrivateRoute from './components/common/privateRoute';
 import Navbar from './components/navbar';
 import Landing from './components/landing';
 import Login from './components/auth/login';
 import Register from './components/auth/register';
+import { setCurrentUser, logoutUser } from './actions/auth';
 
 const GlobalStyle = createGlobalStyle`
-@import url('https://fonts.googleapis.com/css?family=Roboto');
 
 body {
-  font-family: 'Roboto', sans-serif;
+  font-family: Roboto, sans-serif;
   background: #f9f9f9;
 }`;
 
