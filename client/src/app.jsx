@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import { Provider } from 'react-redux';
 import decode from 'jwt-decode';
 import setAuthToken from './util/setAuthToken';
@@ -11,10 +11,12 @@ import configureStore from './Store';
 import theme from './theme';
 import PrivateRoute from './components/common/privateRoute';
 import Navbar from './components/navbar';
-import Landing from './components/landing';
-import Login from './components/auth/login';
-import Register from './components/auth/register';
 import { setCurrentUser, logoutUser } from './actions/auth';
+import Suspended from './components/common/suspended';
+
+const Landing = lazy(() => import('./components/landing'));
+const Login = lazy(() => import('./components/auth/login'));
+const Register = lazy(() => import('./components/auth/register'));
 
 const GlobalStyle = createGlobalStyle`
 
@@ -44,10 +46,10 @@ const App = () => (
       <Router>
         <Navbar />
         <Switch>
-          <PrivateRoute exact path="/" component={Landing} />
+          <PrivateRoute exact path="/" component={Suspended(Landing)} />
         </Switch>
-        <Route exact path="/login" component={Login} />
-        <Route exact path="/register" component={Register} />
+        <Route exact path="/login" component={Suspended(Login)} />
+        <Route exact path="/register" component={Suspended(Register)} />
       </Router>
     </ThemeProvider>
   </Provider>
