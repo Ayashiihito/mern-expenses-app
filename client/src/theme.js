@@ -1,7 +1,7 @@
 const theme = {
-  primaryColor: '#00695c',
-  primaryTextColor: 'white',
-  secondaryColor: 'white',
+  primary: '#00695c',
+  primaryText: 'white',
+  secondary: 'white',
   shadow: '1px 1px 4px rgba(0, 0, 0, 0.3)',
 };
 

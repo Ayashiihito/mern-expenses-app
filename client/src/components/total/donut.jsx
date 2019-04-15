@@ -48,6 +48,7 @@ const Donut = ({ expenses, types, isFetching }) => {
     <CircularProgress
       css={`
         margin-top: 3rem;
+        color: ${props => props.theme.primary};
       `}
     />
   ) : expenses[0] ? (

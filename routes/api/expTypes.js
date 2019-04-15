@@ -1,45 +1,42 @@
 const express = require('express');
-const router = express.Router();
+const exptypes = express.Router();
 const passport = require('passport');
 
 const ExpType = require('../../models/ExpType');
 
 const validateExpTypeInput = require('../../validation/expType.js');
 
-//@route GET api/expTypes
+//Make all api/exptypes routes private
+exptypes.use(passport.authenticate('jwt', { session: false }));
+
+//@route GET api/exptypes
 //@desc get a list of all expense types
-//@access PRIVATE
-router.get(
-  '/',
-  passport.authenticate('jwt', { session: false }),
-  (req, res) => {
-    ExpType.find({ user: req.user.id })
-      .then(types => res.json(types))
-      .catch(err => res.status(404));
+exptypes.get('/', async (req, res) => {
+  try {
+    const types = await ExpType.find({ user: req.user.id });
+    res.json(types);
+  } catch {
+    res.status(404);
   }
-);
+});
 
-//@route POST api/expTypes
+//@route POST api/exptypes
 //@desc save a new to expense type to DB
-//@access PRIVATE
-router.post(
-  '/',
-  passport.authenticate('jwt', { session: false }),
-  (req, res) => {
-    const { errors, isValid } = validateExpTypeInput(req.body);
+exptypes.post('/', async (req, res) => {
+  const { errors, isValid } = validateExpTypeInput(req.body);
 
-    if (!isValid) {
-      return res.status(400).json(errors);
-    }
-
-    const expType = new ExpType({
-      user: req.user.id,
-      name: req.body.name,
-      color: req.body.color,
-    });
-
-    expType.save().then(expType => res.json(expType));
+  if (!isValid) {
+    return res.status(400).json(errors);
   }
-);
 
-module.exports = router;
+  const newExpType = new ExpType({
+    user: req.user.id,
+    name: req.body.name,
+    color: req.body.color,
+  });
+
+  const expType = await newExpType.save();
+  res.json(expType);
+});
+
+module.exports = exptypes;

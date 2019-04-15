@@ -21,7 +21,7 @@ ExpTypeSchema.virtual('id').get(function() {
   return this._id.toHexString();
 });
 
-// Ensure virtual fields are serialised.
+// Ensure virtual fields are serialized.
 ExpTypeSchema.set('toJSON', {
   virtuals: true,
 });

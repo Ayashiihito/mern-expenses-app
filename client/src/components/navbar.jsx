@@ -9,7 +9,7 @@ import Exit from '@material-ui/icons/ExitToAppRounded';
 import { logoutUser } from '../actions/auth';
 
 const StyledLink = styled(Link)`
-  color: ${props => props.theme.primaryTextColor};
+  color: ${props => props.theme.primaryText};
   text-decoration: none;
   text-shadow: ${props => props.theme.shadow};
   padding: 1rem 1.5rem;
@@ -36,7 +36,7 @@ const Navbar = ({ isAuthenticated, logoutUser, avatarSmall }) => (
   <AppBar position="static">
     <Toolbar
       css={`
-        background: ${props => props.theme.primaryColor};
+        background: ${props => props.theme.primary};
         justify-content: space-between;
       `}
     >
@@ -45,7 +45,7 @@ const Navbar = ({ isAuthenticated, logoutUser, avatarSmall }) => (
         css={`
           &:hover {
             //override button hover
-            background: ${props => props.theme.primaryColor};
+            background: ${props => props.theme.primary};
           }
         `}
       >

@@ -94,8 +94,8 @@ const Register = ({ registerUser, errors, history }) => {
         <Button
           css={`
             && {
-              background: ${props => props.theme.primaryColor};
-              color: ${props => props.theme.primaryTextColor};
+              background: ${props => props.theme.primary};
+              color: ${props => props.theme.primaryText};
             }
           `}
           type="Submit"

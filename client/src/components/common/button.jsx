@@ -3,8 +3,8 @@ import mButton from '@material-ui/core/Button';
 
 const Button = styled(mButton)`
   && {
-    color: ${props => props.theme.primaryTextColor};
-    background-color: ${props => props.theme.primaryColor};
+    color: #f3f3f3;
+    background-color: ${props => props.theme.primary};
   }
 `;
 

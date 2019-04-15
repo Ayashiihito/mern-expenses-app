@@ -12,8 +12,8 @@ const CloseButton = styled(Button)`
 
 const Header = styled.div`
   border-radius: 10px 10px 0 0;
-  color: ${props => props.theme.primaryTextColor};
-  background: ${props => props.theme.primaryColor};
+  color: ${props => props.theme.primaryText};
+  background: ${props => props.theme.primary};
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -33,7 +33,7 @@ const Background = styled.div`
   }
 `;
 
-const ModaConstructor = ({
+const ModalConstructor = ({
   open,
   title,
   handleOpen,
@@ -57,4 +57,4 @@ const ModaConstructor = ({
   </>
 );
 
-export default ModaConstructor;
+export default ModalConstructor;

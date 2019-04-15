@@ -26,6 +26,7 @@ const ExpensesHistory = ({ expenses, expTypes, deleteExpense, isFetching }) => {
     <CircularProgress
       css={`
         margin: 3rem;
+        color: ${props => props.theme.primary};
       `}
     />
   ) : Object.keys(expenses)[0] ? (

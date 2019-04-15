@@ -5,8 +5,9 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import styled from 'styled-components/macro';
+import firebase from 'firebase';
 
-import { loginUser } from '../../actions/auth';
+import { loginUser, loginWithFirebase } from '../../actions/auth';
 
 const mapStateToProps = state => ({
   isAuthenticated: state.auth.isAuthenticated,
@@ -24,8 +25,16 @@ const Form = styled.form`
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
+  align-items: center;
 `;
-const Login = ({ loginUser, errors, history, isAuthenticated }) => {
+
+const Login = ({
+  loginUser,
+  loginWithFirebase,
+  errors,
+  history,
+  isAuthenticated,
+}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -36,6 +45,14 @@ const Login = ({ loginUser, errors, history, isAuthenticated }) => {
       password,
     });
   };
+  const onFirebaseLogin = async () => {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    provider.addScope('https://www.googleapis.com/auth/userinfo.profile');
+    const { user } = await firebase.auth().signInWithPopup(provider);
+    const jwt = user.h.b;
+    loginWithFirebase(jwt);
+  };
+
   useEffect(() => {
     if (isAuthenticated) {
       history.push('/');
@@ -73,14 +90,33 @@ const Login = ({ loginUser, errors, history, isAuthenticated }) => {
         <Button
           css={`
             && {
-              background: ${props => props.theme.primaryColor};
-              color: ${props => props.theme.primaryTextColor};
+              background: ${props => props.theme.primary};
+              color: ${props => props.theme.primaryText};
             }
           `}
           variant="contained"
           type="Submit"
         >
           Log in
+        </Button>
+        <span
+          css={`
+            display: block;
+            margin: 0.5rem;
+          `}
+        >
+          OR
+        </span>
+        <Button
+          css={`
+            && {
+              background: #cc1818;
+              color: white;
+            }
+          `}
+          onClick={onFirebaseLogin}
+        >
+          Login with Google
         </Button>
       </Form>
     </MyPaper>
@@ -89,5 +125,5 @@ const Login = ({ loginUser, errors, history, isAuthenticated }) => {
 
 export default connect(
   mapStateToProps,
-  { loginUser }
+  { loginUser, loginWithFirebase }
 )(withRouter(Login));

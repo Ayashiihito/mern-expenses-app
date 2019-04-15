@@ -9,7 +9,7 @@ const path = require('path');
 
 const expenses = require('./routes/api/expenses');
 const expTypes = require('./routes/api/expTypes');
-const users = require('./routes/api/users');
+const users = require('./routes/api/auth');
 
 const PORT = 5000;
 
@@ -27,19 +27,21 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(passport.initialize());
 app.use(compression());
 
+// cors middlewere runs only in development
 if (process.env.NODE_ENV !== 'production') {
   const cors = require('cors');
   app.use(cors());
 }
+
 //Passport Config:
 require('./config/passport')(passport);
 
 //Routes:
-
 app.use('/api/expenses', expenses);
-app.use('/api/users', users);
-app.use('/api/expTypes', expTypes);
+app.use('/api/auth', users);
+app.use('/api/exptypes', expTypes);
 
+//Serve static files only in production
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'));
   app.get('*', (req, res) => {
@@ -48,5 +50,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 app.listen(process.env.PORT || PORT, () =>
-  console.log(`Started server at ${PORT}, running in ${process.env.NODE_ENV}`)
+  console.log(
+    `Started server at ${PORT}, running in ${app.get('env')} environment`
+  )
 );
