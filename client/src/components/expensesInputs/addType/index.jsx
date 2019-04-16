@@ -20,10 +20,10 @@ const Container = styled.div`
 const AddType = ({ addExpType, toggleModal, expTypes }) => {
   const [typeName, setTypeName] = useState('');
   const [color, setColor] = useState('#1dc291');
-  const [displatColorPicker, setDisplayColorPicker] = useState(false);
+  const [displayColorPicker, setDisplayColorPicker] = useState(false);
   const typeInput = useRef();
   const handleDisplay = () => {
-    setDisplayColorPicker(!displatColorPicker);
+    setDisplayColorPicker(!displayColorPicker);
   };
   const handleTypeNameChange = event => {
     typeInput.current.setCustomValidity('');
@@ -61,7 +61,7 @@ const AddType = ({ addExpType, toggleModal, expTypes }) => {
         <ColorPicker
           color={color}
           handleClick={handleDisplay}
-          display={displatColorPicker}
+          display={displayColorPicker}
           handleClose={handleDisplay}
           handleColorChange={color => setColor(color.hex)}
         />
