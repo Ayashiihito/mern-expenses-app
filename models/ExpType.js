@@ -16,7 +16,7 @@ const ExpTypeSchema = new Schema({
   },
 });
 
-// Duplicate the ID field.
+// Make a virtual 'id' field because '_id' leads to inconsistent code
 ExpTypeSchema.virtual('id').get(function() {
   return this._id.toHexString();
 });

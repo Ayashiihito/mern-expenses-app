@@ -18,7 +18,7 @@ const db = require('./config/keys').mongoURI;
 mongoose
   .connect(db, { useNewUrlParser: true })
   .then(() => console.log('MongoDB connected'))
-  .catch(err => console.log(err));
+  .catch(() => console.log(err));
 
 //Middleware
 app.use(helmet());
@@ -27,8 +27,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(passport.initialize());
 app.use(compression());
 
-// cors middlewere runs only in development
-if (process.env.NODE_ENV !== 'production') {
+// cors middleware runs only in development
+if (app.get('env') !== 'production') {
   const cors = require('cors');
   app.use(cors());
 }
@@ -42,7 +42,7 @@ app.use('/api/auth', users);
 app.use('/api/exptypes', expTypes);
 
 //Serve static files only in production
-if (process.env.NODE_ENV === 'production') {
+if (app.get('env') === 'production') {
   app.use(express.static('client/build'));
   app.get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));

@@ -5,12 +5,11 @@ module.exports = function validateExpenseInput(data) {
   let errors = {};
   let { amount, expTypeId, date } = data;
 
+  amount = !isEmpty(amount) ? amount : '';
   expTypeId = !isEmpty(expTypeId) ? expTypeId : '';
+  date = !isEmpty(date) ? date : '';
 
-  if (!date) {
-    errors.date = 'Expense must have a date';
-  }
-  if (!amount) {
+  if (Validator.isEmpty(amount.toString())) {
     errors.amount = 'amount is required';
   }
   if (amount < 1) {
@@ -18,6 +17,9 @@ module.exports = function validateExpenseInput(data) {
   }
   if (Validator.isEmpty(expTypeId)) {
     errors.expTypeId = 'Type is required';
+  }
+  if (Validator.isEmpty(date)) {
+    errors.date = 'Expense must have a date';
   }
 
   return {

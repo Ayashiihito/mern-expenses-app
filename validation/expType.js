@@ -8,11 +8,11 @@ module.exports = function validateExpTypeInput(data) {
   name = !isEmpty(name) ? name : '';
   color = !isEmpty(color) ? color : '';
 
-  if (Validator.isEmpty(color)) {
-    errors.expType = 'Color is required';
-  }
   if (Validator.isEmpty(name)) {
     errors.expType = 'Name is required';
+  }
+  if (Validator.isEmpty(color)) {
+    errors.expType = 'Color is required';
   }
 
   return {

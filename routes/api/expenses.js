@@ -7,60 +7,66 @@ const ExpType = require('../../models/ExpType');
 
 const validateExpenseInput = require('../../validation/expense.js');
 
-//Make all api/expenses routes private
+//Make all api/expenses routes PRIVATE
 expenses.use(passport.authenticate('jwt', { session: false }));
 
 //@route GET api/expenses
 //@desc get a list of all expenses
-expenses.get('/', (req, res) => {
-  Expense.find({ user: req.user.id })
-    .then(expenses => {
-      res.json(expenses);
-    })
-    .catch(err => res.status(404));
+//@access PRIVATE
+expenses.get('/', async (req, res) => {
+  try {
+    const expenses = await Expense.find({ user: req.user.id });
+    res.json(expenses);
+  } catch {
+    res.status(404);
+  }
 });
 
 //@route POST api/expenses
 //@desc put an expense in DB
-expenses.post('/', (req, res) => {
+//@access PRIVATE
+expenses.post('/', async (req, res) => {
   const { errors, isValid } = validateExpenseInput(req.body);
   const { amount, expTypeId, date } = req.body;
   if (!isValid) {
     return res.status(400).json(errors);
   }
+
   const expense = new Expense({
     user: req.user.id,
     amount,
     expTypeId,
     date,
   });
-
-  ExpType.findById(expTypeId)
-    .then(type =>
-      expense.save().then(expense => {
-        res.json(expense);
-      })
-    )
-    .catch(err => {
-      errors.expense = "ExpType wasn't found";
-      console.log(err);
-      return res.status(400).json(errors);
-    });
+  // Find requested expense's type in DB
+  const type = await ExpType.findById(expTypeId);
+  // If found, save expense in DB
+  if (type) {
+    const savedExpense = await expense.save();
+    res.json(savedExpense);
+  } else {
+    // If not found, send an error
+    errors.expense = "ExpType wasn't found";
+    return res.status(400).json(errors);
+  }
 });
 
 //@route DELETE api/expenses/:id
 //@desc delete an expense from DB
-expenses.delete('/:id', (req, res) => {
-  Expense.findById(req.params.id)
-    .then(expense => {
-      if (expense.user.toString() !== req.user.id) {
-        return res.status(401).json({ notauthorized: 'User not authorized' });
-      }
-      expense.remove().then(() => res.json({ id: req.params.id }));
-    })
-    .catch(err =>
-      res.status(404).json({ expensenotfound: 'No expense found' })
-    );
+//@access PRIVATE
+expenses.delete('/:id', async (req, res) => {
+  try {
+    // Find a requested expense in DB
+    const expense = await Expense.findById(req.params.id);
+    // and compare its id with user's
+    if (expense.user.toString() !== req.user.id) {
+      return res.status(401).json({ notauthorized: 'User not authorized' });
+    }
+    // if no match send an error
+    expense.remove().then(() => res.json({ id: req.params.id }));
+  } catch {
+    res.status(404).json({ expensenotfound: 'No expense found' });
+  }
 });
 
 module.exports = expenses;
