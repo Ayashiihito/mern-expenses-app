@@ -43,7 +43,7 @@ const ExpensesInputs = React.memo(({ expTypes, addExpense, setTo }) => {
     const selectedTypeId = expTypes.filter(
       type => type.name === selectedType
     )[0].id;
-    addExpense(amount, selectedTypeId);
+    addExpense(parseInt(amount), selectedTypeId);
     setTo(new Date());
   };
   return (

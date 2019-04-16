@@ -1,6 +1,6 @@
 import axios from 'axios';
-import decode from 'jwt-decode';
 import setAuthToken from '../util/setAuthToken';
+import setUserWithToken from '../util/setUserWithToken';
 
 export const registerUser = (user, history) => async dispatch => {
   try {
@@ -16,14 +16,12 @@ export const registerUser = (user, history) => async dispatch => {
 
 export const loginUser = user => async dispatch => {
   try {
+    //Send email and password to server to get JWT
     const { data } = await axios.post('/api/auth/login', user);
     const { token } = data;
 
-    localStorage.setItem('jwtToken', token);
-    setAuthToken(token);
-
-    const decodedToken = decode(token);
-    dispatch(setCurrentUser(decodedToken));
+    localStorage.setItem('jwt', token);
+    setUserWithToken(dispatch, token);
   } catch (err) {
     dispatch({
       type: 'GET_ERRORS',
@@ -34,16 +32,12 @@ export const loginUser = user => async dispatch => {
 
 export const loginWithFirebase = firebaseToken => async dispatch => {
   try {
-    // exchange firebase token for back-end jwt token
+    // exchange firebase token for back-end JWT
     const { data } = await axios.post('/api/auth/firebase', { firebaseToken });
     const { token } = data;
 
-    localStorage.setItem('jwtToken', token);
-    setAuthToken(token);
-
-    const decodedToken = decode(token);
-    console.log(decodedToken);
-    dispatch(setCurrentUser(decodedToken));
+    localStorage.setItem('jwt', token);
+    setUserWithToken(dispatch, token);
   } catch (err) {
     dispatch({
       type: 'GET_ERRORS',
@@ -58,7 +52,7 @@ export const setCurrentUser = decoded => ({
 });
 
 export const logoutUser = () => dispatch => {
-  localStorage.removeItem('jwtToken');
+  localStorage.removeItem('jwt');
   setAuthToken(false);
   dispatch(setCurrentUser({}));
   dispatch({

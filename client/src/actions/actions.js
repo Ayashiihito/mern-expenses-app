@@ -4,8 +4,12 @@ export const fetchAll = () => async dispatch => {
   dispatch({
     type: 'FETCH_START',
   });
-  const { data: expTypes } = await axios.get('/api/expTypes');
-  const { data: expenses } = await axios.get('/api/expenses');
+  // Make to requests, then wait for both to resolve
+  const expTypesRes = axios.get('/api/expTypes');
+  const expensesRes = axios.get('/api/expenses');
+
+  const { data: expTypes } = await expTypesRes;
+  const { data: expenses } = await expensesRes;
   dispatch({
     type: 'FETCH_ALL',
     expTypes,
@@ -18,7 +22,7 @@ export const fetchAll = () => async dispatch => {
 
 export const addExpense = (amount, expTypeId) => async dispatch => {
   const expense = {
-    amount: parseInt(amount),
+    amount,
     expTypeId,
     date: new Date(),
   };

@@ -9,6 +9,7 @@ const SpinnerContainer = styled.div`
   transform: translate(-50%, -50%);
 `;
 
+// Shows spinner when lazy component is loading
 const Suspended = Component => props => (
   <Suspense
     fallback={

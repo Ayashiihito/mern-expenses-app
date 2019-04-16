@@ -6,7 +6,9 @@ const initialState = {
     addType: false, // doesn't work without predefining modal's state?
   },
   filters: {
-    from: new Date('1/1/19'), //maybe it shouldn't be here
+    //maybe it shouldn't be here
+    // TODO: change to date.now - 1 year?
+    from: new Date('1/1/19'),
     to: new Date(),
     order: 'NEW_FIRST',
   },
@@ -19,6 +21,8 @@ export default (state = initialState, action) => {
         ...state,
         expenses: [
           ...action.expenses.map(expense => {
+            //make dates from stings
+            //needed for date range selection
             expense.date = new Date(expense.date);
             return expense;
           }),
@@ -66,13 +70,14 @@ export default (state = initialState, action) => {
         },
       };
     case 'ADD_EXPTYPE': {
-      //declare a block so there's no two id constants in the scope
+      //declare a block so there's no two id constants in the switch scope
       const { id, name, color } = action;
       return {
         ...state,
         expTypes: [...state.expTypes, { id, name, color }],
       };
     }
+    // Date range selection
     case 'SET_FROM':
       return {
         ...state,
