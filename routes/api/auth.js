@@ -8,6 +8,10 @@ const secret = require('../../config/keys').secret;
 const validateRegisterInput = require('../../validation/register');
 const validateLoginInput = require('../../validation/login');
 
+/*
+ TODO: rate limiting to prevent brute force
+*/
+
 //@route POST /api/auth/register
 //@desc register a new user and put in DB
 auth.post('/register', async (req, res) => {
