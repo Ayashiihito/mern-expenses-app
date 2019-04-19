@@ -102,7 +102,7 @@ auth.post('/login', async (req, res) => {
 let serviceAccount;
 const admin = require('firebase-admin');
 if (auth.get('env') === 'production') {
-  serviceAccount = JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS);
+  serviceAccount = JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS.replace(/\\n/g, '\n'));
 } else {
   serviceAccount = process.env.GOOGLE_APPLICATION_CREDENTIALS;
 }
