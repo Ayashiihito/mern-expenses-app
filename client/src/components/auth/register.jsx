@@ -13,16 +13,19 @@ const mapStateToProps = state => ({
 });
 
 const MyPaper = styled(Paper)`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  padding: 2rem;
-  transform: translate(-50%, -50%);
+  padding: 1.5rem 0;
+  margin: 2rem auto;
+  max-width: 95vw;
+
+  @media screen and (min-width: 480px) {
+    max-width: 50vw;
+  }
 `;
 const Form = styled.form`
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
+  align-items: center;
 `;
 
 const Register = ({ registerUser, errors, history }) => {

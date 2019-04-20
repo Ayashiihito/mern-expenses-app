@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
+import Button from '../common/button';
 import Paper from '@material-ui/core/Paper';
 import styled from 'styled-components/macro';
 import firebase from 'firebase';
+import { Link } from 'react-router-dom';
 
 import { loginUser, loginWithFirebase } from '../../actions/auth';
 
@@ -14,18 +15,28 @@ const mapStateToProps = state => ({
   errors: state.errors,
 });
 
-const MyPaper = styled(Paper)`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  padding: 2rem;
-  transform: translate(-50%, -50%);
+const Wrapper = styled.div`
+  margin: 2rem auto;
+  max-width: 95vw;
+
+  @media screen and (min-width: 480px) {
+    max-width: 50vw;
+  }
 `;
 const Form = styled.form`
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
   align-items: center;
+`;
+const RegisterContainer = styled.span`
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 5rem;
+  border: solid #969696 1px;
+  border-radius: 10px;
 `;
 
 const Login = ({
@@ -59,67 +70,63 @@ const Login = ({
     }
   });
   return (
-    <MyPaper
-      css={`
-        padding: 3rem;
-      `}
-    >
-      <Form onSubmit={handleSubmit}>
-        <TextField
-          required
-          error={errors.email ? true : false}
-          helperText={errors.email}
-          type="email"
-          name="email"
-          label="Email"
-          margin="normal"
-          variant="outlined"
-          onChange={e => setEmail(e.target.value)}
-        />
-        <TextField
-          required
-          error={errors.password ? true : false}
-          helperText={errors.password}
-          type="password"
-          name="password"
-          label="Password"
-          margin="normal"
-          variant="outlined"
-          onChange={e => setPassword(e.target.value)}
-        />
-        <Button
+    <>
+      <Wrapper>
+        <Paper
           css={`
-            && {
-              background: ${props => props.theme.primary};
-              color: ${props => props.theme.primaryText};
-            }
-          `}
-          variant="contained"
-          type="Submit"
-        >
-          Log in
-        </Button>
-        <span
-          css={`
-            display: block;
-            margin: 0.5rem;
+            padding: 1.5rem 0;
           `}
         >
-          OR
-        </span>
-        <Button
-          css={`
-            && {
-              background: #cc1818;
-              color: white;
-            }
-          `}
-          onClick={onFirebaseLogin}
-        >
-          Login with Google
-        </Button>
-      </Form>
-    </MyPaper>
+          <Form onSubmit={handleSubmit}>
+            <TextField
+              required
+              error={errors.email ? true : false}
+              helperText={errors.email}
+              type="email"
+              name="email"
+              label="Email"
+              margin="normal"
+              variant="outlined"
+              onChange={e => setEmail(e.target.value)}
+            />
+            <TextField
+              required
+              error={errors.password ? true : false}
+              helperText={errors.password}
+              type="password"
+              name="password"
+              label="Password"
+              margin="normal"
+              variant="outlined"
+              onChange={e => setPassword(e.target.value)}
+            />
+            <Button type="Submit">Log in</Button>
+            <span
+              css={`
+                display: block;
+                margin: 0.5rem;
+              `}
+            >
+              OR
+            </span>
+            <Button
+              css={`
+                && {
+                  background: #cc1818;
+                  color: white;
+                }
+              `}
+              onClick={onFirebaseLogin}
+            >
+              Login with Google
+            </Button>
+          </Form>
+        </Paper>
+        <RegisterContainer>
+          New here?<Link to="/register">Create an account</Link>
+        </RegisterContainer>
+      </Wrapper>
+    </>
   );
 };
 

@@ -84,12 +84,7 @@ const Navbar = ({ isAuthenticated, logoutUser, avatarSmall }) => (
               />
             </StyledLink>
           </div>
-        ) : (
-          <>
-            <StyledLink to="/login">Login</StyledLink>
-            <StyledLink to="/register">Register</StyledLink>
-          </>
-        )}
+        ) : null}
       </div>
     </Toolbar>
   </AppBar>
