@@ -7,7 +7,7 @@ const User = require('../../models/User');
 const secret = require('../../config/keys').secret;
 const validateRegisterInput = require('../../validation/register');
 const validateLoginInput = require('../../validation/login');
-
+const firebase = require('../../config/firebase');
 /*
  TODO: rate limiting to prevent brute force
 */
@@ -94,30 +94,13 @@ auth.post('/login', async (req, res) => {
   }
 });
 
-/* =========================================================
- FIREBASE AUTH
-  ============================================================*/
-
-//Firebase config
-let serviceAccount;
-const admin = require('firebase-admin');
-if (auth.get('env') === 'production') {
-  serviceAccount = JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS.replace(/\\n/g, '\n'));
-} else {
-  serviceAccount = process.env.GOOGLE_APPLICATION_CREDENTIALS;
-}
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  databaseURL: 'https://expenses-app-id.firebaseio.com',
-});
-
 //@route POST /api/auth/firebase
 //@desc Login or register with firebase and return a JWT token
 auth.post('/firebase', async (req, res) => {
   try {
     const { firebaseToken } = req.body;
     // verify request's token with firebase API
-    const firebaseUser = await admin.auth().verifyIdToken(firebaseToken);
+    const firebaseUser = await firebase.auth().verifyIdToken(firebaseToken);
     const { email } = firebaseUser;
 
     //Find user in DB
