@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Close from '@material-ui/icons/CloseRounded';
+
 import myButton from '../common/button';
 
 const Button = styled(myButton)`

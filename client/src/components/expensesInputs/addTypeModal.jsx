@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Button from '../common/button';
 
-import { toggleModal, addExpType } from '../../actions/actions';
+import { toggleModal, addExpType } from '../../redux/actions/actions';
 import ModalConstructor from '../common/modalConstructor';
 import AddType from './addType';
 

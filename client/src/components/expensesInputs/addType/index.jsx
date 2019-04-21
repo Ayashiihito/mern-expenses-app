@@ -1,8 +1,8 @@
 import React, { useState, useRef } from 'react';
 import TextField from '@material-ui/core/TextField';
-import Button from '../../common/button';
 import styled from 'styled-components';
 
+import Button from '../../common/button';
 import { ColorPicker } from './colorPicker';
 
 const Form = styled.form`

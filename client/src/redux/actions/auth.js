@@ -1,6 +1,6 @@
 import axios from 'axios';
-import setAuthToken from '../util/setAuthToken';
-import setUserWithToken from '../util/setUserWithToken';
+import setAuthToken from '../../util/setAuthToken';
+import setUserWithToken from '../../util/setUserWithToken';
 
 export const registerUser = (user, history) => async dispatch => {
   try {

@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import ExpensesInputs from './expensesInputs';
 import ExpensesHistory from './expensesHistory';
 import Total from './total';
-import { fetchAll } from '../actions/actions.js';
+import { fetchAll } from '../redux/actions/actions.js';
 
 const Main = styled.main`
   display: flex;

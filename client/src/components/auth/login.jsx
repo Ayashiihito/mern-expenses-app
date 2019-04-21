@@ -8,7 +8,7 @@ import styled from 'styled-components/macro';
 import firebase from 'firebase';
 import { Link } from 'react-router-dom';
 
-import { loginUser, loginWithFirebase } from '../../actions/auth';
+import { loginUser, loginWithFirebase } from '../../redux/actions/auth';
 
 const mapStateToProps = state => ({
   isAuthenticated: state.auth.isAuthenticated,

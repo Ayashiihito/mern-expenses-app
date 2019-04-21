@@ -6,7 +6,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Exit from '@material-ui/icons/ExitToAppRounded';
 
-import { logoutUser } from '../actions/auth';
+import { logoutUser } from '../redux/actions/auth';
 
 const StyledLink = styled(Link)`
   color: ${props => props.theme.primaryText};
@@ -66,7 +66,6 @@ const Navbar = ({ isAuthenticated, logoutUser, avatarSmall }) => (
             />
             <StyledLink
               css={`
-                //center text and exit icon
                 display: flex;
                 align-items: center;
                 justify-content: center;

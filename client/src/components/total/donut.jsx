@@ -4,7 +4,7 @@ import styled from 'styled-components/macro';
 import { Doughnut } from 'react-chartjs-2';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
-import { getExpenses } from '../../actions/selectors';
+import { getExpenses } from '../../redux/actions/selectors';
 
 const Placeholder = styled.div`
   flex: 1;

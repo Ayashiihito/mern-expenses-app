@@ -4,9 +4,9 @@ import mPaper from '@material-ui/core/Paper';
 import styled from 'styled-components/macro';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
-import { getExpenses } from '../../actions/selectors';
-import { groupByDate } from '../../actions/selectors';
-import { deleteExpense } from '../../actions/actions';
+import { getExpenses } from '../../redux/actions/selectors';
+import { groupByDate } from '../../redux/actions/selectors';
+import { deleteExpense } from '../../redux/actions/actions';
 import HistoryElement from './historyElement';
 
 const Paper = styled(mPaper)`

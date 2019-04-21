@@ -6,12 +6,12 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import firebase from 'firebase';
 import 'typeface-roboto';
 
-import configureStore from './Store';
+import configureStore from './redux/store';
 import theme from './theme';
 import PrivateRoute from './components/common/privateRoute';
 import Navbar from './components/navbar';
 import Suspended from './components/common/suspended';
-import { logoutUser } from './actions/auth';
+import { logoutUser } from './redux/actions/auth';
 import setUserWithToken from './util/setUserWithToken';
 
 const Landing = lazy(() => import('./components/landing'));
@@ -40,7 +40,7 @@ const store = configureStore();
 if (localStorage.jwt) {
   // Login with token if its already stored in local storage
   const decoded = setUserWithToken(store.dispatch, localStorage.jwt);
-  // Use return value to logout user when token expires and redirect to login
+  // Use the return value to logout user when token expires and redirect to login
   const currentTime = Date.now() / 1000;
   if (decoded.exp < currentTime) {
     store.dispatch(logoutUser());
@@ -56,7 +56,7 @@ const App = () => (
       <Router>
         <Navbar />
         {/* 
-        Switch around private route to prevent wierd bugs 
+        Switch is around private route to prevent wierd bugs 
         (advice from internet, didn't test)
         */}
         <Switch>
