@@ -40,6 +40,7 @@ auth.post('/register', async (req, res) => {
     d: 'mm', // Default
   });
   const newUser = new User({
+    method: 'local',
     name,
     email,
     password,
@@ -73,6 +74,14 @@ auth.post('/login', async (req, res) => {
     errors.email = 'Incorrect email or password';
     return res.status(404).json(errors);
   }
+
+  //TODO: refactor to properly destingush between defferent strategiest
+  if (user.method !== 'local') {
+    errors.email =
+      'Your email is in our database, but under a different method';
+    return res.status(404).json(errors);
+  }
+
   // compare request's password with user's password
   const isMatch = await bcrypt.compare(password, user.password);
   if (isMatch) {
@@ -120,6 +129,7 @@ auth.post('/firebase', async (req, res) => {
       });
       const { name } = firebaseUser;
       const newUser = new User({
+        method: 'google',
         name,
         email,
         avatar,
