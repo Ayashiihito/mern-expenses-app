@@ -5,7 +5,8 @@ import TextField from '@material-ui/core/TextField';
 import Button from '../common/button';
 import Paper from '@material-ui/core/Paper';
 import styled from 'styled-components/macro';
-import firebase from 'firebase';
+import firebase from 'firebase/app';
+import 'firebase/auth';
 import { Link } from 'react-router-dom';
 
 import { loginUser, loginWithFirebase } from '../../redux/actions/auth';
@@ -38,6 +39,16 @@ const RegisterContainer = styled.span`
   border: solid #969696 1px;
   border-radius: 10px;
 `;
+
+// Configure Firebase for Google auth
+firebase.initializeApp({
+  apiKey: 'AIzaSyDXwOB2EN6FrFd6KT52vuvKUb4Dtm-fGgE',
+  authDomain: 'expenses-app-id.firebaseapp.com',
+  databaseURL: 'https://expenses-app-id.firebaseio.com',
+  projectId: 'expenses-app-id',
+  storageBucket: 'expenses-app-id.appspot.com',
+  messagingSenderId: '801441428594',
+});
 
 const Login = ({
   loginUser,

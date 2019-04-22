@@ -3,7 +3,6 @@ import { Provider } from 'react-redux';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { createGlobalStyle, ThemeProvider } from 'styled-components';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import firebase from 'firebase';
 import 'typeface-roboto';
 
 import configureStore from './redux/store';
@@ -24,16 +23,6 @@ body {
   font-family: Roboto, sans-serif;
   background: #f9f9f9;
 }`;
-
-// Configure Firebase for Google auth
-firebase.initializeApp({
-  apiKey: 'AIzaSyDXwOB2EN6FrFd6KT52vuvKUb4Dtm-fGgE',
-  authDomain: 'expenses-app-id.firebaseapp.com',
-  databaseURL: 'https://expenses-app-id.firebaseio.com',
-  projectId: 'expenses-app-id',
-  storageBucket: 'expenses-app-id.appspot.com',
-  messagingSenderId: '801441428594',
-});
 
 const store = configureStore();
 
