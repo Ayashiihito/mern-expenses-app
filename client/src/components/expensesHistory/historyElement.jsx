@@ -9,7 +9,7 @@ const Button = styled(myButton)`
     background: transparent;
     padding: 0;
     height: 100%;
-    color: ${props => props.theme.primaryColor};
+    color: #333;
   }
 `;
 const Color = styled.div`
