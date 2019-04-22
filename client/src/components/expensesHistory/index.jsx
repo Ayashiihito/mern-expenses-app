@@ -12,7 +12,7 @@ import HistoryElement from './historyElement';
 const Paper = styled(mPaper)`
   margin: 0.3rem 0;
   padding: 1rem;
-  width: 95%;
+  width: 100%;
 `;
 
 const mapStateToProps = state => ({
@@ -21,6 +21,7 @@ const mapStateToProps = state => ({
   isFetching: state.expensesApp.isFetching,
 });
 
+//TODO: refactor chained ternary operators
 const ExpensesHistory = ({ expenses, expTypes, deleteExpense, isFetching }) => {
   return isFetching ? (
     <CircularProgress
