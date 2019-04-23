@@ -60,12 +60,13 @@ expenses.delete('/:id', async (req, res) => {
     const expense = await Expense.findById(req.params.id);
     // and compare its id with user's
     if (expense.user.toString() !== req.user.id) {
+      // if no match send an error
       return res.status(401).json({ notauthorized: 'User not authorized' });
     }
-    // if no match send an error
-    expense.remove().then(() => res.json({ id: req.params.id }));
+    await expense.remove();
+    res.json({ id: req.params.id });
   } catch {
-    res.status(404).json({ expensenotfound: 'No expense found' });
+    res.status(404).json({ notfound: 'No expense found' });
   }
 });
 

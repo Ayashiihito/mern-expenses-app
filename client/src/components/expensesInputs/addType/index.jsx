@@ -10,21 +10,16 @@ const Form = styled.form`
   width: 100%;
   flex-direction: column;
   align-items: center;
-`;
-const Container = styled.div`
-  margin: 3rem;
-  display: flex;
-  align-items: flex-end;
+  & > * {
+    margin: 1rem 0;
+  }
 `;
 
 const AddType = ({ addExpType, toggleModal, expTypes }) => {
   const [typeName, setTypeName] = useState('');
   const [color, setColor] = useState('#1dc291');
-  const [displayColorPicker, setDisplayColorPicker] = useState(false);
   const typeInput = useRef();
-  const handleDisplay = () => {
-    setDisplayColorPicker(!displayColorPicker);
-  };
+
   const handleTypeNameChange = event => {
     typeInput.current.setCustomValidity('');
     setTypeName(event.target.value);
@@ -46,26 +41,21 @@ const AddType = ({ addExpType, toggleModal, expTypes }) => {
 
   return (
     <Form onSubmit={handleSubmit}>
-      <Container>
-        <TextField
-          required
-          name="typeName"
-          label="New type name"
-          value={typeName}
-          onChange={handleTypeNameChange}
-          margin="none"
-          inputProps={{
-            ref: typeInput,
-          }}
-        />
-        <ColorPicker
-          color={color}
-          handleClick={handleDisplay}
-          display={displayColorPicker}
-          handleClose={handleDisplay}
-          handleColorChange={color => setColor(color.hex)}
-        />
-      </Container>
+      <TextField
+        required
+        name="typeName"
+        label="New type name"
+        value={typeName}
+        onChange={handleTypeNameChange}
+        margin="none"
+        inputProps={{
+          ref: typeInput,
+        }}
+      />
+      <ColorPicker
+        color={color}
+        handleColorChange={color => setColor(color.hex)}
+      />
       <Button type="submit">Confirm</Button>
     </Form>
   );

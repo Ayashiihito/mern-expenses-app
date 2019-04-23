@@ -41,4 +41,23 @@ exptypes.post('/', async (req, res) => {
   res.json(expType);
 });
 
+//@route DELETE api/exptypes/:id
+//@desc delete an expense type from DB
+//@access PRIVATE
+exptypes.delete('/:id', async (req, res) => {
+  try {
+    // Find a requested expType in DB
+    const expType = await ExpType.findById(req.params.id);
+    // and compare its id with user's
+    if (expType.user.toString() !== req.user.id) {
+      // if no match send an error
+      return res.status(401).json({ notauthorized: 'User not authorized' });
+    }
+    await expType.remove();
+    res.json({ id: req.params.id });
+  } catch {
+    res.status(404).json({ notfound: 'No expType found' });
+  }
+});
+
 module.exports = exptypes;

@@ -21,12 +21,12 @@
     "compression": "^1.7.4",
     "cors": "^2.8.5",
     "express": "^4.16.4",
-    "firebase-admin": "^7.2.0",
+    "firebase-admin": "^7.3.0",
     "gravatar": "^1.8.0",
     "helmet": "^3.16.0",
     "jsonwebtoken": "^8.5.1",
-    "mongodb": "^3.1.13",
-    "mongoose": "^5.4.21",
+    "mongodb": "^3.2.3",
+    "mongoose": "^5.5.3",
     "passport": "^0.4.0",
     "passport-google-oauth20": "^2.0.0",
     "passport-jwt": "^4.0.0",
@@ -35,6 +35,6 @@
   },
   "devDependencies": {
     "concurrently": "^4.1.0",
-    "nodemon": "^1.18.9"
+    "nodemon": "^1.18.11"
   }
 }
