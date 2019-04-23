@@ -9,14 +9,18 @@ import AddTypeModal from './addTypeModal';
 import ExpensesTypeSelect from './expensesTypeSelect';
 
 const TextField = styled(mTextField)`
-  margin-left: 1rem !important;
+&&{
+  margin-left: 1rem;
+}
 `;
 
 const FormContainer = styled.form`
-  width: 100%;
   display: flex;
+  flex-wrap: wrap;
+  width: 100%;
   flex-direction: column;
   justify-content: center;
+  align-content: center;
   align-items: flex-end;
 
   @media screen and (min-width: 480px) {
@@ -24,10 +28,10 @@ const FormContainer = styled.form`
   }
 `;
 const Container = styled.div`
-  min-width: 19rem;
+  margin: 0.5rem;
+  min-width: 15rem;
   display: flex;
   align-items: flex-end;
-  margin: 0.6rem;
 `;
 
 const mapStateToProps = state => ({

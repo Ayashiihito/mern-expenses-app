@@ -8,13 +8,14 @@ import Total from './total';
 import { fetchAll } from '../redux/actions/actions.js';
 
 const Main = styled.main`
+  margin: 0.6rem;
   display: flex;
   flex-direction: column;
   width: auto;
   align-items: center;
   justify-content: center;
 
-  @media screen and (min-width: 480px) {
+  @media screen and (min-width: 480px){
     flex-direction: row-reverse;
     padding: 2rem 5rem;
     align-items: flex-start;
@@ -22,11 +23,14 @@ const Main = styled.main`
 `;
 
 const Container = styled.div`
-  padding: 0 1rem;
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin: 0 1rem;
   width: 100%;
+    @media screen and (min-width: 480px){
+      width: 60%;
+  }
 `;
 
 const Landing = ({ fetchAll }) => {

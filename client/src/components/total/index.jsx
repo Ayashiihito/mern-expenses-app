@@ -9,11 +9,11 @@ const Paper = styled(mPaper)`
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-width: 90vw;
+  min-width:100%;
   min-height: 23rem;
 
   @media screen and (min-width: 480px) {
-    min-width: 30vw;
+    min-width: 40%;
   }
 `;
 
