@@ -34,8 +34,12 @@ const Container = styled.div`
 `;
 
 const Landing = ({ fetchAll }) => {
+  let firstLoad = true;
   useEffect(() => {
-    fetchAll();
+    if (firstLoad) {
+      firstLoad = false;
+      fetchAll();
+    }
   });
   return (
     <Main>
