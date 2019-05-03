@@ -1,4 +1,5 @@
 const initialState = {
+  isFirstLoad: true,
   isFetching: false,
   expenses: [],
   expTypes: [],
@@ -16,6 +17,11 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    case 'ON_FIRST_LOAD':
+      return {
+        ...state,
+        isFirstLoad: false,
+      };
     case 'FETCH_ALL':
       return {
         ...state,
@@ -37,9 +43,7 @@ export default (state = initialState, action) => {
       };
     case 'LOG_OUT':
       return {
-        ...state,
-        expenses: [],
-        expTypes: [],
+        ...initialState,
       };
     case 'ADD_EXPENSE':
       const { id, date, expTypeId, amount } = action;

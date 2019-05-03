@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import ExpensesInputs from './expensesInputs';
 import ExpensesHistory from './expensesHistory';
 import Total from './total';
-import { fetchAll } from '../redux/actions/actions.js';
+import { fetchAll, onFirstLoad } from '../redux/actions/actions.js';
 
 const Main = styled.main`
   margin: 0.6rem;
@@ -15,7 +15,7 @@ const Main = styled.main`
   align-items: center;
   justify-content: center;
 
-  @media screen and (min-width: 480px){
+  @media screen and (min-width: 480px) {
     flex-direction: row-reverse;
     padding: 2rem 5rem;
     align-items: flex-start;
@@ -28,16 +28,18 @@ const Container = styled.div`
   align-items: center;
   margin: 0 1rem;
   width: 100%;
-    @media screen and (min-width: 480px){
-      width: 60%;
+  @media screen and (min-width: 480px) {
+    width: 60%;
   }
 `;
+const mapStateToProps = state => ({
+  isFirstLoad: state.expensesApp.isFirstLoad,
+});
 
-const Landing = ({ fetchAll }) => {
-  let firstLoad = true;
+const Landing = ({ fetchAll, isFirstLoad, onFirstLoad }) => {
   useEffect(() => {
-    if (firstLoad) {
-      firstLoad = false;
+    if (isFirstLoad) {
+      onFirstLoad();
       fetchAll();
     }
   });
@@ -53,6 +55,6 @@ const Landing = ({ fetchAll }) => {
 };
 
 export default connect(
-  null,
-  { fetchAll }
+  mapStateToProps,
+  { fetchAll, onFirstLoad }
 )(Landing);
