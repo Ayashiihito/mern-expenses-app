@@ -2,8 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components/macro';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
 import Exit from '@material-ui/icons/ExitToAppRounded';
 
 import { logoutUser } from '../redux/actions/auth';
@@ -11,7 +9,6 @@ import { logoutUser } from '../redux/actions/auth';
 const StyledLink = styled(Link)`
   color: ${props => props.theme.primaryText};
   text-decoration: none;
-  text-shadow: ${props => props.theme.shadow};
   padding: 1rem 1.5rem;
   border-radius: 5%;
   border: none;
@@ -32,62 +29,38 @@ const mapStateToProps = state => ({
   avatarSmall: state.auth.user.avatarSmall,
 });
 
-const Navbar = ({ isAuthenticated, logoutUser, avatarSmall }) => (
-  <AppBar position="static">
-    <Toolbar
+const Navbar = ({ isAuthenticated, logoutUser, avatarSmall }) =>
+  isAuthenticated ? (
+    <div
       css={`
-        background: ${props => props.theme.primary};
-        justify-content: space-between;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-end;
       `}
     >
+      <Avatar src={avatarSmall} alt="Visit gravatar.com to set profile image" />
       <StyledLink
-        to="/"
         css={`
-          &:hover {
-            //override button hover
-            background: ${props => props.theme.primary};
-          }
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: black;
         `}
+        as="button"
+        href="#"
+        onClick={() => logoutUser()}
       >
-        Expenses
+        Log Out
+        <Exit
+          css={`
+            padding-left: 10px;
+            font-size: 30px !important;
+          `}
+        />
       </StyledLink>
-      <div>
-        {isAuthenticated ? (
-          <div
-            css={`
-              display: flex;
-              flex-direction: row;
-              align-items: center;
-            `}
-          >
-            <Avatar
-              src={avatarSmall}
-              alt="Visit gravatar.com to set profile image"
-            />
-            <StyledLink
-              css={`
-                display: flex;
-                align-items: center;
-                justify-content: center;
-              `}
-              as="button"
-              href="#"
-              onClick={() => logoutUser()}
-            >
-              Log Out
-              <Exit
-                css={`
-                  padding-left: 10px;
-                  font-size: 30px !important;
-                `}
-              />
-            </StyledLink>
-          </div>
-        ) : null}
-      </div>
-    </Toolbar>
-  </AppBar>
-);
+    </div>
+  ) : null;
 
 export default connect(
   mapStateToProps,

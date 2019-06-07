@@ -1,5 +1,9 @@
 import axios from 'axios';
 
+export const onFirstLoad = () => ({
+  type: 'ON_FIRST_LOAD',
+});
+
 export const fetchAll = () => async dispatch => {
   dispatch({
     type: 'FETCH_START',

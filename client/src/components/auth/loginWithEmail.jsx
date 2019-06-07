@@ -1,14 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import styled from 'styled-components/macro';
 import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
+import Button from '../common/button';
 import Paper from '@material-ui/core/Paper';
+import styled from 'styled-components/macro';
+import { Link } from 'react-router-dom';
 
-import { registerUser } from '../../redux/actions/auth';
+import { loginUser } from '../../redux/actions/auth';
 
 const mapStateToProps = state => ({
+  isAuthenticated: state.auth.isAuthenticated,
   errors: state.errors,
 });
 
@@ -18,26 +20,31 @@ const Form = styled.form`
   flex-direction: column;
   align-items: center;
 `;
+const RegisterContainer = styled.span`
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 5rem;
+  flex-direction: column;
+`;
 
-const Register = ({ registerUser, errors, history }) => {
-  const [name, setName] = useState('');
+const LoginWithEmail = ({ loginUser, errors, history, isAuthenticated }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [password2, setPassword2] = useState('');
 
   const handleSubmit = event => {
     event.preventDefault();
-    registerUser(
-      {
-        name,
-        email,
-        password,
-        password2,
-      },
-      history
-    );
+    loginUser({
+      email,
+      password,
+    });
   };
-
+  useEffect(() => {
+    if (isAuthenticated) {
+      history.push('/');
+    }
+  });
   return (
     <Paper
       css={`
@@ -50,17 +57,6 @@ const Register = ({ registerUser, errors, history }) => {
       `}
     >
       <Form onSubmit={handleSubmit}>
-        <TextField
-          required
-          error={errors.name ? true : false}
-          helperText={errors.name}
-          type="text"
-          name="name"
-          label="Name"
-          margin="normal"
-          variant="outlined"
-          onChange={e => setName(e.target.value)}
-        />
         <TextField
           required
           error={errors.email ? true : false}
@@ -83,34 +79,16 @@ const Register = ({ registerUser, errors, history }) => {
           variant="outlined"
           onChange={e => setPassword(e.target.value)}
         />
-        <TextField
-          required
-          error={errors.password2 ? true : false}
-          helperText={errors.password2}
-          type="password"
-          name="confirmPassword"
-          label="Confirm password"
-          margin="normal"
-          variant="outlined"
-          onChange={e => setPassword2(e.target.value)}
-        />
-        <Button
-          css={`
-            && {
-              background: ${props => props.theme.primary};
-              color: ${props => props.theme.primaryText};
-            }
-          `}
-          type="Submit"
-        >
-          Register
-        </Button>
+        <Button type="Submit">Log in</Button>
       </Form>
+      <RegisterContainer>
+        New here? <Link to="/register">Create an account</Link>
+      </RegisterContainer>
     </Paper>
   );
 };
 
 export default connect(
   mapStateToProps,
-  { registerUser }
-)(withRouter(Register));
+  { loginUser }
+)(withRouter(LoginWithEmail));

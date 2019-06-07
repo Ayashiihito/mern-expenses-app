@@ -16,6 +16,7 @@ import setUserWithToken from './util/setUserWithToken';
 const Landing = lazy(() => import('./components/landing'));
 const Login = lazy(() => import('./components/auth/login'));
 const Register = lazy(() => import('./components/auth/register'));
+const LoginWithEmail = lazy(() => import('./components/auth/loginWithEmail'));
 
 const GlobalStyle = createGlobalStyle`
 
@@ -53,6 +54,11 @@ const App = () => (
         </Switch>
         <Route exact path="/login" component={Suspended(Login)} />
         <Route exact path="/register" component={Suspended(Register)} />
+        <Route
+          exact
+          path="/loginwithemail"
+          component={Suspended(LoginWithEmail)}
+        />
       </Router>
     </ThemeProvider>
   </Provider>
