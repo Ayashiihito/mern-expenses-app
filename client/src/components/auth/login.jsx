@@ -73,13 +73,13 @@ const Login = ({ loginWithFirebase, history, isAuthenticated }) => {
         onClick={onFirebaseLogin}
       >
         <Googlebtn />
-        Login with Google
+        Log in with Google
       </Button>
       <RegisterContainer>
         Also you can:
         <Link to="/register">Create an account</Link>
         or
-        <Link to="/loginWithEmail">Login with Email</Link>
+        <Link to="/loginWithEmail">Log in with Email</Link>
       </RegisterContainer>
     </Paper>
   );
