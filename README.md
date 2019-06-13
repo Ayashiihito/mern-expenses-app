@@ -17,7 +17,7 @@ Install with `npm install && client-install`.
 Run in development with `npm run dev`.
 Provide keys inside `config/keys_dev.js` or as environment variables for production.
 
-Back-end routes:
+API:
   * GET `/api/expenses`  
   * POST `/api/expenses`
   * DELETE `/api/expenses/:id`
