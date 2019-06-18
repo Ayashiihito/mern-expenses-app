@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import mTextField from '@material-ui/core/TextField';
 import Button from '../common/button';
 
-import { addExpense, setTo } from '../../redux/actions/actions';
+import { addExpense, setTo } from '../../redux/actions/expenses';
 import AddTypeModal from './addTypeModal';
 import ExpensesTypeSelect from './expensesTypeSelect';
 

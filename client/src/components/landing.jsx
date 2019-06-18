@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import ExpensesInputs from './expensesInputs';
 import ExpensesHistory from './expensesHistory';
 import Total from './total';
-import { fetchAll, onFirstLoad } from '../redux/actions/actions.js';
+import { fetchAll, onFirstLoad } from '../redux/actions/expenses.js';
 
 const Main = styled.main`
   margin: 0.6rem;

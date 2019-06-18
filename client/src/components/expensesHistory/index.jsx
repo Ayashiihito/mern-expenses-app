@@ -6,7 +6,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 
 import { getExpenses } from '../../redux/actions/selectors';
 import { groupByDate } from '../../redux/actions/selectors';
-import { deleteExpense } from '../../redux/actions/actions';
+import { deleteExpense } from '../../redux/actions/expenses';
 import HistoryElement from './historyElement';
 
 const Paper = styled(mPaper)`

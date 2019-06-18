@@ -4,7 +4,7 @@ import { MuiPickersUtilsProvider } from 'material-ui-pickers';
 import MomentUtils from '@date-io/moment';
 import { DatePicker } from 'material-ui-pickers';
 
-import { setFrom, setTo } from '../../redux/actions/actions';
+import { setFrom, setTo } from '../../redux/actions/expenses';
 
 const mapStateToProps = state => ({
   from: state.expensesApp.filters.from,
