@@ -46,7 +46,7 @@ const App = () => (
       <Router>
         <Navbar />
         {/* 
-        Switch is around private route to prevent wierd bugs 
+        Switch is around private route to prevent weird bugs 
         (advice from internet, didn't test)
         */}
         <Switch>
