@@ -13,7 +13,7 @@
  
  authentication with JWT and passport.js
  
-Install with `npm install && client-install`.  
+Install with `npm install && npm run client-install`.  
 Run in development with `npm run dev`.
 Provide keys inside `config/keys_dev.js` or as environment variables for production.
 
