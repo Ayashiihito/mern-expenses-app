@@ -22,7 +22,7 @@ auth.post('/register', async (req, res) => {
     return res.status(400).json(errors);
   }
 
-  //respond with error if user's email is already in DB
+
   const user = await User.findOne({ email });
   if (user) {
     errors.email = 'User with this email already exists';
@@ -48,7 +48,6 @@ auth.post('/register', async (req, res) => {
     avatarSmall,
   });
 
-  //Encrypt newUser's password and respond with user object
   bcrypt.genSalt(10, (err, salt) => {
     bcrypt.hash(newUser.password, salt, async (err, hash) => {
       if (err) throw err;
@@ -68,24 +67,23 @@ auth.post('/login', async (req, res) => {
   if (!isValid) {
     return res.status(400).json(errors);
   }
-  // If no user in DB, respond with error
+
   const user = await User.findOne({ email });
   if (!user) {
     errors.email = 'Incorrect email or password';
     return res.status(404).json(errors);
   }
 
-  //TODO: refactor to properly destingush between defferent strategiest
+  //TODO: refactor to properly distinguish between different strategies
   if (user.method !== 'local') {
     errors.email =
       'Your email is in our database, but under a different method';
     return res.status(404).json(errors);
   }
 
-  // compare request's password with user's password
+
   const isMatch = await bcrypt.compare(password, user.password);
   if (isMatch) {
-    //put user's info into payload
     const { id, name, avatar, avatarSmall } = user;
     const payload = {
       id,
@@ -94,7 +92,6 @@ auth.post('/login', async (req, res) => {
       avatarSmall,
     };
 
-    //Make a JWT from payload and respond with it
     const token = await jwt.sign(payload, secret, { expiresIn: 3600 });
     res.json({ success: true, token: 'Bearer ' + token });
   } else {
@@ -108,14 +105,12 @@ auth.post('/login', async (req, res) => {
 auth.post('/firebase', async (req, res) => {
   try {
     const { firebaseToken } = req.body;
-    // verify request's token with firebase API
+
     const firebaseUser = await firebase.auth().verifyIdToken(firebaseToken);
     const { email } = firebaseUser;
 
-    //Find user in DB
     let user = await User.findOne({ email });
 
-    //if there's no user, register a new user
     if (!user) {
       const avatar = gravatar.url(email, {
         s: '200', // Size
@@ -137,7 +132,7 @@ auth.post('/firebase', async (req, res) => {
       });
       user = await newUser.save();
     }
-    //put user's info into payload
+
     const { id, name, avatar, avatarSmall } = user;
     const payload = {
       id,
@@ -145,7 +140,7 @@ auth.post('/firebase', async (req, res) => {
       avatar,
       avatarSmall,
     };
-    //Make a JWT from payload and respond with it
+
     const newToken = await jwt.sign(payload, secret, { expiresIn: 3600 });
     res.json({ success: true, token: 'Bearer ' + newToken });
   } catch {

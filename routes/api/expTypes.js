@@ -30,13 +30,13 @@ exptypes.post('/', async (req, res) => {
   if (!isValid) {
     return res.status(400).json(errors);
   }
-  // create a new expense type
+
   const newExpType = new ExpType({
     user: req.user.id,
     name: req.body.name,
     color: req.body.color,
   });
-  //Save it to DB and respond with it
+
   const expType = await newExpType.save();
   res.json(expType);
 });
@@ -46,13 +46,12 @@ exptypes.post('/', async (req, res) => {
 //@access PRIVATE
 exptypes.delete('/:id', async (req, res) => {
   try {
-    // Find a requested expType in DB
     const expType = await ExpType.findById(req.params.id);
-    // and compare its id with user's
+
     if (expType.user.toString() !== req.user.id) {
-      // if no match send an error
       return res.status(401).json({ notauthorized: 'User not authorized' });
     }
+    
     await expType.remove();
     res.json({ id: req.params.id });
   } catch {

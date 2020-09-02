@@ -38,14 +38,14 @@ expenses.post('/', async (req, res) => {
     expTypeId,
     date,
   });
-  // Find requested expense's type in DB
+
   const type = await ExpType.findById(expTypeId);
-  // If found, save expense in DB
+
   if (type) {
     const savedExpense = await expense.save();
     res.json(savedExpense);
   } else {
-    // If not found, send an error
+
     errors.expense = "ExpType wasn't found";
     return res.status(400).json(errors);
   }
@@ -56,13 +56,12 @@ expenses.post('/', async (req, res) => {
 //@access PRIVATE
 expenses.delete('/:id', async (req, res) => {
   try {
-    // Find a requested expense in DB
     const expense = await Expense.findById(req.params.id);
-    // and compare its id with user's
+    
     if (expense.user.toString() !== req.user.id) {
-      // if no match send an error
       return res.status(401).json({ notauthorized: 'User not authorized' });
     }
+
     await expense.remove();
     res.json({ id: req.params.id });
   } catch {
